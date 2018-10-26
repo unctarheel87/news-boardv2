@@ -22,9 +22,9 @@ export default(props) => {
       <p className="author">{props.article.author}</p>
       {stars.map((star, i) => {
         if(star.star) {
-          return <i className="material-icons" key={i} onClick={() => this.toggleStar(i, article._id, stars)}>star</i>
+          return <i className="material-icons star-i" key={i} onClick={() => this.toggleStar(i, article._id, stars)}>star</i>
         } else {
-          return <i className="material-icons" key={i} onClick={() => this.toggleStar(i, article._id, stars)}>star_border</i>
+          return <i className="material-icons star-i" key={i} onClick={() => this.toggleStar(i, article._id, stars)}>star_border</i>
         }
       })}
       <Link to={`/saved/${props.article._id}`}>

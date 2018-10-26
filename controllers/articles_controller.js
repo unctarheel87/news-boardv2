@@ -107,7 +107,6 @@ function scrapeData(req, res, topic) {
         const author = $(element).children('p.byline').children('span.author').text().trim();
         const img = $(element).siblings('.media').find('img').attr('src');
         const link = $(element).siblings('.media').children('a').attr('href');
-       
         if(title && summary) {
           articles.push({ title, summary, author, img, link });
         }

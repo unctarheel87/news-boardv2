@@ -183,6 +183,10 @@ a.arrow span {
   margin-left: 5px;
 }
 
+.star-i {
+  cursor: pointer;
+}
+
 /* Search Modal */
 
 

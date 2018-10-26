@@ -13,9 +13,9 @@ export default class NewsBoard extends Component {
   }
   render() {
     return (
-      <div>
-        <Navbar />
         <BrowserRouter>
+          <div>
+          <Navbar />
           <Switch>
             <Route exact path='/' 
                    component={() => 
@@ -27,8 +27,8 @@ export default class NewsBoard extends Component {
             />
             <Route exact path='/saved/:id' component={SavedArticlePage} />
           </Switch>
+          </div>
         </BrowserRouter>
-      </div>
     )
   }
 }

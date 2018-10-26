@@ -3,8 +3,9 @@ import { Row, Input, Button, Icon, Modal } from 'react-materialize';
 import API from '../utils/API'
 import { store } from '../store'
 import { setArticles, clearArticles, isLoading } from '../actions';
+import { withRouter } from 'react-router-dom'
 
-export default class Search extends Component {
+class Search extends Component {
   state = {
     search: '',
     numRecords: 0,
@@ -26,6 +27,7 @@ export default class Search extends Component {
       this.state.endYear
     ).then(res => {
       $('#search_modal').modal('close')
+      this.props.history.push('/')
       const records = res.data.response.docs.filter((rec, i) => i <= this.state.numRecords-1 )
       const articles = []
       console.log(records)
@@ -58,6 +60,8 @@ export default class Search extends Component {
     )   
   }
 }
+
+export default withRouter(Search)
 
 function clear() {
   store.dispatch(clearArticles())
