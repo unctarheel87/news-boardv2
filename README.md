@@ -8,7 +8,7 @@ Go to [App](https://young-plains-73073.herokuapp.com)
 
 The app has a number of features, including the option to *Save* your favorite articles.
 
-The app also supports social colloboration.  After saving an article, you and your friends are able to access the article snapshot and write, edit, remove comments to encourage constructive discourse around current events.
+The app also supports social colloboration.  After saving an article, you and your friends are able to access the article snapshot and write, edit, and remove comments to encourage constructive discourse around current events.
 
 * RealTime Upates available via websocket implementation using `socket.io`
 
