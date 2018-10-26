@@ -117,6 +117,7 @@ a:hover {
 
 .collapsible-body {
   position: relative;
+  padding: 50px;
 }
 
 .articles {
@@ -185,6 +186,14 @@ a.arrow span {
 
 .star-i {
   cursor: pointer;
+}
+
+.timestamp {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  color: #999;
+
 }
 
 /* Search Modal */

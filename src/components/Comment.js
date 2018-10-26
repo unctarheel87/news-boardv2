@@ -50,7 +50,8 @@ export default class Comment extends Component {
       return (
         <Collapsible className="z-depth-0">
           <CollapsibleItem header='View comment' id="comment-container" icon='message'>
-            {this.state.commentText.isVisible && this.props.comment.comment}
+            {this.state.commentText.isVisible && this.props.comment.comment} 
+            <span className="timestamp">{this.state.commentText.isVisible && "Updated : " + this.props.comment.updated}</span>
             {this.state.commentIcons.isVisible && 
               <CommentIcons 
                 article={this.props.article}
