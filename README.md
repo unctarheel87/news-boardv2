@@ -10,7 +10,7 @@ The app has a number of features, including the option to *Save* your favorite a
 
 The app also supports social collaboration.  After saving an article, you and your friends are able to access the article snapshot and write / edit / remove comments to encourage constructive discourse around current events. 
 
-You may also rate an article from 1 - 4 stars. Top rated articles will be listed first under `My Articles`.
+You may also rate an article from 1 - 4 stars. Top-rated articles will be listed first under `My Articles`.
 
 * RealTime Upates available via websocket implementation using `socket.io`
 
