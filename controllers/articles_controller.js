@@ -1,13 +1,10 @@
 const express = require('express');
+const path = require('path');
 const axios = require('axios');
 const cheerio = require('cheerio')
 const Comment = require('../models/comment');
 const Article = require('../models/article');
-var router = express.Router()
-
-router.get('/', (req, res) => {
-  res.sendFile('index.html');
-});
+const router = express.Router()
 
 router.get('/scrape/:topic', (req, res) => {
   scrapeData(req, res, req.params.topic);
@@ -30,6 +27,7 @@ router.get('/clear', (req, res) => {
 
 router.get('/articles/saved', (req, res) => {
   Article.find({})
+    .sort({rating: -1})
     .populate('comments')
     .then(dbArticles => {
       res.json(dbArticles);
@@ -38,10 +36,24 @@ router.get('/articles/saved', (req, res) => {
     })
 });
 
+router.get('/articles/saved/:id', (req, res) => {
+  Article.findOne({ _id: req.params.id })
+    .populate('comments')
+    .then(dbArticles => {
+      res.json(dbArticles);
+    }).catch(err => {
+      console.log(err);
+    })
+});
+
+router.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+
 router.post('/articles/:id/comments/', (req, res) => {
   Comment.create(req.body).then(dbComment => {
     return Article.findOneAndUpdate({_id: req.params.id}, { 
-      $set: { comments: dbComment._id }
+      $push: { comments: dbComment._id }
     }, { new: true } )
   }).then(dbArticle => {
       res.json(dbArticle);
@@ -54,6 +66,15 @@ router.put('/articles/comments/:id', (req, res) => {
     .then(dbComment => {
       res.json(dbComment);
       console.log(dbComment)
+    })
+    .catch(err => res.json(err));
+});
+
+router.put('/articles/saved/:id', (req, res) => {
+  Article.findOneAndUpdate({_id: req.params.id}, req.body)
+    .then(dbArticle => {
+      res.json(dbArticle);
+      console.log(dbArticle)
     })
     .catch(err => res.json(err));
 });

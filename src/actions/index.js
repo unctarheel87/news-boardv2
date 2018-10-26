@@ -12,16 +12,22 @@ export function setSavedArticles (articles) {
   }
 }
 
+export function setSavedArticle (article) {
+  return {
+    type: "SET_SAVED_ARTICLE",
+    article
+  }
+}
+
 export function clearArticles () {
   return {
     type: "CLEAR_ARTICLES"
   }
 }
 
-export function changeNoteState (noteValue, id) {
+export function isLoading (isLoading) {
   return {
-    type: "CHANGE_NOTE_STATE",
-    noteValue,
-    id
+    type: "IS_LOADING",
+    isLoading
   }
 }

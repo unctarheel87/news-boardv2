@@ -1,5 +1,5 @@
 import React from 'react';
-import { setArticles, clearArticles } from '../actions';
+import { setArticles, clearArticles, isLoading } from '../actions';
 import axios from 'axios';
 import { store } from '../store';
 
@@ -19,11 +19,12 @@ export default(props) => {
 
 function scrape(e) {
   clear();
-  document.getElementById('preloader').style.display = 'block';
+  store.dispatch(isLoading(true))
+  console.log(store.getState())
   axios.get(`/scrape/${e.target.dataset.topic}`)
   .then(response => {
+    store.dispatch(isLoading(false))
     store.dispatch(setArticles(response.data))
-    document.getElementById('preloader').style.display = 'none';
   })
   .catch(err => console.log(err));
 }

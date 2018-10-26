@@ -6,9 +6,11 @@ import { Col, Preloader } from 'react-materialize';
 export default(props) => {
   return (
     <main>
-      <Col id="preloader" s={4}>
-        <Preloader color="red" />
-      </Col>
+      {props.store.isLoading &&
+        <Col id="preloader" s={4}>
+          <Preloader color="red" />
+        </Col>
+      }
       <div className="articles">
         {
         props.store.articles.map((article, i) => {
@@ -20,7 +22,7 @@ export default(props) => {
       <h4>My Articles</h4>
         {
         props.store.savedArticles.map((article, i) => {
-          return <SavedArticle key={`savedArticle${i}`} article={article} />
+          return <SavedArticle key={article._id} article={article} />
         })
         }
       </div>

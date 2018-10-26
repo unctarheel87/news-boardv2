@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Collapsible, CollapsibleItem } from 'react-materialize';
-import getSavedArticles from './getSavedArticles';
-import { changeNoteState } from '../actions';
+import { getSavedArticles, getSavedArticle } from './getSavedArticles';
 import { store } from '../store';
 
 import openSocket from 'socket.io-client';
@@ -24,12 +23,14 @@ export default class Comment extends Component {
       },
       commentText: {
         isVisible: true
-      }
+      },
+      comment: this.props.comment.comment
     }
 
     this.handleCommentView = this.handleCommentView.bind(this)
     this.handleIconsView = this.handleIconsView.bind(this)
     this.handleFormView = this.handleFormView.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   handleIconsView(bool) {
     this.setState({commentIcons: {isVisible: bool}})
@@ -40,15 +41,20 @@ export default class Comment extends Component {
   handleCommentView(bool) {
     this.setState({commentText: {isVisible: bool}})
   }
+  handleChange(e) {
+    console.log(this.state.comment)
+    this.setState({comment: e.target.value})
+  }
   render() {
-    if(this.props.article.comments) {
+    if(this.props.article.comments.length > 0) {
       return (
         <Collapsible className="z-depth-0">
           <CollapsibleItem header='View comment' id="comment-container" icon='message'>
-            {this.state.commentText.isVisible && this.props.article.comments.comment}
+            {this.state.commentText.isVisible && this.props.comment.comment}
             {this.state.commentIcons.isVisible && 
               <CommentIcons 
-                article={this.props.article} 
+                article={this.props.article}
+                comment={this.props.comment} 
                 handleFormView={this.handleFormView}
                 handleIconsView={this.handleIconsView}
                 handleCommentView={this.handleCommentView}
@@ -57,6 +63,9 @@ export default class Comment extends Component {
             {this.state.editForm.isVisible &&
               <EditForm 
                 article={this.props.article} 
+                commentVal={this.state.comment}
+                comment={this.props.comment}
+                handleChange={this.handleChange}
                 handleFormView={this.handleFormView}
                 handleIconsView={this.handleIconsView}
                 handleCommentView={this.handleCommentView}
@@ -66,53 +75,26 @@ export default class Comment extends Component {
         </Collapsible>
       )
     } else {
-      return (
-        <Collapsible className="z-depth-0">
-          <CollapsibleItem header='Leave a comment' icon='mode_edit'>
-            <form onSubmit = {(e) => {
-                saveComment(e, this.props.article._id, this.props.article.title)
-              }}
-            >  
-              <textarea className="materialize-textarea" name="comment"></textarea>
-              <button className='btn red lighten-3 comment-btn' type="submit">Add</button>
-            </form>
-          </CollapsibleItem>
-        </Collapsible>
-      )
+      return <div></div>
     }
   }
 }
 
-function saveComment(e, id, title) {
-  e.preventDefault();
-  const comment = e.target.comment.value
-  axios.post(`/articles/${id}/comments`, { comment })
-    .then(response => {
-      emit('comment added to article:<br>' + title.slice(0, 23) + '...')
-      getSavedArticles()
-    })
-    .catch(err => console.log(err));
-}
-
-function updateComment(e, id, title) {
+function updateComment(e, id, title, article_id) {
   e.preventDefault();
   const comment = e.target.comment.value
   axios.put(`/articles/comments/${id}`, { comment })
     .then(response => {
       emit('comment updated for article:<br>' + title.slice(0, 23) + '...')
-      getSavedArticles()
+      getSavedArticle(article_id)
     })
     .catch(err => console.log(err));
-}
-
-function handleChange(e, id) {
-  store.dispatch(changeNoteState(e.target.value, id))
 }
 
 function EditForm(props) { 
   return (
     <form onSubmit = {(e) => {
-        updateComment(e, props.article.comments._id, props.article.title)
+        updateComment(e, props.comment._id, props.article.title, props.article._id)
         props.handleFormView(false)
         props.handleCommentView(true)
         props.handleIconsView(true)
@@ -120,10 +102,8 @@ function EditForm(props) {
     >  
     <textarea className="materialize-textarea"
       name="comment"
-      value={props.article.comments.comment} 
-      onChange={(e) => {
-        handleChange(e, props.article._id)
-      }}
+      value={props.commentVal} 
+      onChange={props.handleChange}
     >
     </textarea>
     <button className='btn red lighten-3 comment-btn' type="submit">Add</button>
@@ -144,7 +124,7 @@ function CommentIcons(props) {
       >mode_edit</i>
       <i className="material-icons"
       onClick={(e) => {
-        removeComment(props.article.comments._id, props.article.title)
+        removeComment(props.comment._id, props.article.title)
       } 
       }
       >delete</i>

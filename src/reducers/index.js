@@ -24,17 +24,16 @@ export default (state, action) => {
           })
         })
       };
-    case "CHANGE_NOTE_STATE": 
+    case "SET_SAVED_ARTICLE":
       return {
         ...state,
-        savedArticles: state.savedArticles.map(article => {
-          if(article._id === action.id) {
-            article.comments.comment = action.noteValue
-            return article
-          }
-          return article
-        })
-      }
+        savedArticle: action.article
+      };
+    case "IS_LOADING": 
+      return {
+        ...state,
+        isLoading: action.isLoading
+      };
     default:
       return state;
   }

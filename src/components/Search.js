@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Row, Input, Button, Icon, Modal } from 'react-materialize';
 import API from '../utils/API'
 import { store } from '../store'
-import { setArticles, clearArticles } from '../actions'
+import { setArticles, clearArticles, isLoading } from '../actions';
 
 export default class Search extends Component {
   state = {
@@ -19,7 +19,7 @@ export default class Search extends Component {
   handleSubmit = event => {
     event.preventDefault();
     clear();
-    document.getElementById('preloader').style.display = 'block';
+    store.dispatch(isLoading(true))
     API.nytSearch(
       this.state.search, 
       this.state.startYear, 
@@ -37,7 +37,7 @@ export default class Search extends Component {
         const link = record.web_url
         articles.push({ title, summary, img, author, link })
       })
-      document.getElementById('preloader').style.display = 'none';
+      store.dispatch(isLoading(false))
       store.dispatch(setArticles(articles))
     })
      .catch(err => console.log(err))
