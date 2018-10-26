@@ -16,4 +16,6 @@ The app also supports social colloboration.  After saving an article, you and yo
 * `React.js` for rendering
 * `Redux` for state management
 * `MongoDB` for database implementation
-* API endpoints with `express'
+* API endpoints with `express`
+
+Happy Reading!
