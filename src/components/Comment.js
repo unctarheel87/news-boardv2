@@ -6,7 +6,7 @@ import { store } from '../store';
 
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('http://127.0.0.1:8080');
+const socket = openSocket();
 socket.on('message', msg => {
   window.Materialize.toast(msg, 10000)
 })
@@ -31,7 +31,6 @@ export default class Comment extends Component {
     this.handleIconsView = this.handleIconsView.bind(this)
     this.handleFormView = this.handleFormView.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.clearForm = this.clearForm.bind(this)
   }
   handleIconsView(bool) {
     this.setState({commentIcons: {isVisible: bool}})
@@ -45,9 +44,6 @@ export default class Comment extends Component {
   handleChange(e) {
     console.log(this.state.comment)
     this.setState({comment: e.target.value})
-  }
-  clearForm() {
-    this.setState({comment: ''})
   }
   render() {
     if(this.props.article.comments.length > 0) {
