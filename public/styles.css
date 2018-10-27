@@ -165,6 +165,10 @@ a:hover {
   margin: 50px 0;
 }
 
+#edit-form {
+  margin: 0;
+}
+
 .saved-article .author {
   margin-bottom: 20px;
 }

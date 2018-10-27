@@ -94,7 +94,7 @@ function updateComment(e, id, title, article_id) {
 
 function EditForm(props) { 
   return (
-    <form onSubmit = {(e) => {
+    <form id="edit-form" onSubmit = {(e) => {
         updateComment(e, props.comment._id, props.article.title, props.article._id)
         props.handleFormView(false)
         props.handleCommentView(true)
@@ -125,7 +125,7 @@ function CommentIcons(props) {
       >mode_edit</i>
       <i className="material-icons"
       onClick={(e) => {
-        removeComment(props.comment._id, props.article.title)
+        removeComment(props.comment._id, props.article.title, props.article._id)
       } 
       }
       >delete</i>
@@ -133,11 +133,11 @@ function CommentIcons(props) {
   )
 }
 
-function removeComment(id, title) {
+function removeComment(id, title, article_id) {
   axios.delete(`/comments/${id}`)
     .then(response => {
       emit('comment deleted for article:<br>' + title.slice(0, 23) + '...')
-      getSavedArticles()
+      getSavedArticle(article_id)
       })
     .catch(err => console.log(err));
 }

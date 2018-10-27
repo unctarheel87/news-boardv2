@@ -91,6 +91,7 @@ function saveComment(e, id, title) {
     .then(response => {
       emit('comment added to article:<br>' + title.slice(0, 23) + '...')
       getSavedArticle(id)
+      $('form input[type="text"]').val('');
     })
     .catch(err => console.log(err));
 }
