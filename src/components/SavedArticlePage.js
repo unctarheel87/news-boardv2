@@ -68,7 +68,7 @@ export default class SavedArticlePage extends Component {
               }}
             >  
               <h5>Add a comment:</h5>
-              <textarea className="materialize-textarea" name="comment"></textarea>
+              <textarea className="materialize-textarea" name="comment" id="text-area"></textarea>
               <button className='btn red lighten-3 comment-btn' type="submit">Add</button>
           </form>
           <button className='btn red lighten-3 delete-btn' 
@@ -91,7 +91,7 @@ function saveComment(e, id, title) {
     .then(response => {
       emit('comment added to article:<br>' + title.slice(0, 23) + '...')
       getSavedArticle(id)
-      $('form input[type="text"]').val('');
+      $('#text-area').val('');
     })
     .catch(err => console.log(err));
 }
