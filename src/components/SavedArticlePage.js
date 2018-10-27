@@ -6,7 +6,7 @@ import { setStars } from '../actions';
 import { store } from '../store';
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('http://127.0.0.1:8080');
+const socket = openSocket();
  
 export default class SavedArticlePage extends Component {
   state = {
