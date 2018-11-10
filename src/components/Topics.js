@@ -9,7 +9,7 @@ export default(props) => {
       <button data-topic='world' onClick={scrape}>World</button>
       <button data-topic='business' onClick={scrape}>Business</button>
       <button data-topic='science' onClick={scrape}>Science</button>
-      <button data-topic='technology' onClick={scrape}>Technology</button>
+      <button data-topic='travel' onClick={scrape}>Travel</button>
       <button data-topic='fashion' onClick={scrape}>Style</button>
       <button data-topic='arts' onClick={scrape}>Arts</button>
       <button data-topic='sports' onClick={scrape}>Sports</button>
