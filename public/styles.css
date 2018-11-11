@@ -100,7 +100,8 @@ a:hover {
 
 .delete-btn {
   color: white;
-  float: right
+  float: right;
+  margin-bottom: 40px;
 }
 
 .comment-icons i:hover {
