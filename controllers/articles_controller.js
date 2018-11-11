@@ -101,12 +101,12 @@ function scrapeData(req, res, topic) {
   axios.get(`https://www.nytimes.com/section/${topic}`).then(response => {
     const $ = cheerio.load(response.data);
     const articles = []
-    $('div.story-body').each(function(i, element) {
-        const title = $(element).children('h2.headline').text().trim();
-        const summary = $(element).children('p.summary').text().trim();
-        const author = $(element).children('p.byline').children('span.author').text().trim();
-        const img = $(element).siblings('.media').find('img').attr('src');
-        const link = $(element).siblings('.media').children('a').attr('href');
+    $('article').each(function(i, element) {
+        const title = $(element).children().children('h2').text().trim();
+        const summary = $(element).children().children('p').text().trim();
+        const author = $(element).find('[itemprop="author"]').text().trim();
+        const img = $(element).find('img').attr('src');
+        const link = "https://www.nytimes.com" + $(element).children().children('a').attr('href');
         if(title && summary) {
           articles.push({ title, summary, author, img, link });
         }
