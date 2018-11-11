@@ -106,7 +106,12 @@ function scrapeData(req, res, topic) {
         const summary = $(element).children().children('p').text().trim();
         const author = $(element).find('[itemprop="author"]').text().trim();
         const img = $(element).find('img').attr('src');
-        const link = "https://www.nytimes.com" + $(element).children().children('a').attr('href');
+        let link = $(element).children().children('a').attr('href');
+        if(link.charAt(0) === '/') {
+          link = "https://www.nytimes.com" + link
+        } else {
+          link
+        }
         if(title && summary) {
           articles.push({ title, summary, author, img, link });
         }
