@@ -107,7 +107,7 @@ function scrapeData(req, res, topic) {
         const author = $(element).find('[itemprop="author"]').text().trim();
         const img = $(element).find('img').attr('src');
         let link = $(element).children().children('a').attr('href');
-        if(link.charAt(0) === '/') {
+        if(link && link.charAt(0) === '/') {
           link = "https://www.nytimes.com" + link
         } else {
           link
